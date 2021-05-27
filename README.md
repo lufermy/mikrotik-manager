@@ -8,10 +8,13 @@ The mikrotik API is fro Pypi
 All the code is written and tested in a clean Ubuntu Server 21.04 installation
 
 How to install
+
 $ git clone https://github.com/lufermy/mikrotik-manager.git
 $ cd pyTelegramBotAPI
 $ python3 setup.py install
 
 Once its installed, just run main.py
+
 $ python3 main.py
 
+The code is very intolerant with errors for now, i'll change that
