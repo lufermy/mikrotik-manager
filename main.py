@@ -1,6 +1,8 @@
 #Imports
 import routeros_api #downloaded from pypi.org
 import telebot #github.com/eternnoir
+#commands
+from commands import commands_interface
 #---------------------------------------------------Functions
 # 1
 def menu_opc_2(login_username,login_password,login_ip,bot_token):
@@ -106,23 +108,8 @@ while loopstmnt == True:
             interfaces=mapi.get_resource('/interface')
             interfaces_list=interfaces.get()
             message_sliced = message.text[16:len(message.text)]
-            if message_sliced == "":
-                cont = 0
-                for x in interfaces_list:
-                    linea = str(interfaces_list[cont])
-                    linea = linea.replace("{"," ")
-                    linea = linea.replace("}"," ")
-                    linea = linea.replace(",","\n")
-                    linea = linea.replace("'"," ")
-                    cont=cont+1
-            else:
-                linea = str(interfaces_list[int(message_sliced)-1])
-                linea = linea.replace("{"," ")
-                linea = linea.replace("}"," ")
-                linea = linea.replace(",","\n")
-                linea = linea.replace("'"," ")
-            
-            bot.reply_to(message,linea)
+            reply = commands_interface.show(message_sliced,interfaces_list)
+            bot.reply_to(message,reply)
 
 
         @bot.message_handler(func=lambda message: True)
