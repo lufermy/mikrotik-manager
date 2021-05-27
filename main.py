@@ -94,10 +94,40 @@ while loopstmnt == True:
         @bot.message_handler(commands=['start', 'help'])
         def send_welcome(message):
 	        bot.reply_to(message, "Howdy, how are you doing?")
+        
+        @bot.message_handler(commands=['write'])
+        def write_firewall(message):
+            bot.reply_to(message, "Check the mikrotik firewall!")
+            list_address =  mapi.get_resource('/ip/firewall/address-list')
+            list_address.add(address="192.168.0.1",comment="P1",list="10M")
+            print(list_address.get(comment="P1"))
+        @bot.message_handler(commands=['show_interfaces'])
+        def show_interfaces(message):
+            interfaces=mapi.get_resource('/interface')
+            interfaces_list=interfaces.get()
+            message_sliced = message.text[16:len(message.text)]
+            if message_sliced == "":
+                cont = 0
+                for x in interfaces_list:
+                    linea = str(interfaces_list[cont])
+                    linea = linea.replace("{"," ")
+                    linea = linea.replace("}"," ")
+                    linea = linea.replace(",","\n")
+                    linea = linea.replace("'"," ")
+                    cont=cont+1
+            else:
+                linea = str(interfaces_list[int(message_sliced)-1])
+                linea = linea.replace("{"," ")
+                linea = linea.replace("}"," ")
+                linea = linea.replace(",","\n")
+                linea = linea.replace("'"," ")
+            
+            bot.reply_to(message,linea)
+
 
         @bot.message_handler(func=lambda message: True)
         def echo_all(message):
-	        bot.reply_to(message, message.text)
+            bot.reply_to(message, message.text)
 
         bot.polling()
         connection.disconnect()
