@@ -1,6 +1,7 @@
 #Imports
 import routeros_api #downloaded from pypi.org
 import telebot #github.com/eternnoir
+import time
 #commands
 from commands import commands_interface
 from commands import commands_help
@@ -37,7 +38,12 @@ def token_input():
     token = input()
     return token
 # Menu structure
+def clear_screen():
+    for x in range(1,50):
+        print("\n")
 def print_menu():
+    time.sleep(2)
+    clear_screen()
     print("-----------------------------------")
     print("---- Mikrotik telegram Manager ----")
     print("||        27/05/2021 Build       ||")
@@ -48,6 +54,7 @@ def print_menu():
     print("||  4)Delete data.txt            ||")
     print("||  5)Run application            ||")
     print("||  6)Close application          ||")
+    print("||  7)About                      ||")
     print("-----------------------------------")
     print("-----------------------------------")
 def temporal():
@@ -107,8 +114,13 @@ while loopstmnt == True:
                 reply = commands_interface.help()
             if message_sliced[0:4] == "show":
                 reply = commands_interface.show(message_sliced,interface_list)
-            bot.reply_to(message,reply)
-
+            if message_sliced[0:7] == "restart":
+                reply = commands_interface.restart(message_sliced,mapi)
+            if message_sliced[0:6] == "enable":
+                reply = "enable"
+            if message_sliced[0:7] == "disable":
+                reply = "disable"
+            bot.reply_to(message,reply)               
 
         @bot.message_handler(func=lambda message: True)
         def echo_all(message):
@@ -122,3 +134,10 @@ while loopstmnt == True:
         print("")
         print("Bye...")
         print("")
+    if menu_opc == "7":
+        for x in range(1,50):
+            print("\n")
+        print("This is where im supposed to write about, just, not yet")
+        input("Press enter to be back")
+        for x in range(1,50):
+            print("\n")

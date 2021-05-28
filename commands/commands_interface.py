@@ -30,4 +30,11 @@ def show(message,data):
         return s
     except IndexError:
         return "ERROR: The interface does not exist"
-
+def restart(message,api):
+    message_sliced=message[8:len(message)]
+    if message_sliced.replace(" ","") != "":
+        #api.get_binary_resource('/').call('interface/disable',{'numbers':'0'})
+        return "has it restarted?"
+    else:
+        print(message_sliced)
+    return "si no ha petado..."
