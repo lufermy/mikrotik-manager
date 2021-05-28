@@ -15,11 +15,9 @@ def show(message,data):
                 s = data[cont]
                 cont = cont+1
                 try:
-                    if s['running'] == "true":
-                        running=running+s['name']+"\n"
+                    print(s['running'])
                 except Exception as e:
                     print(e)
-            return running
         else:
             s = str(data[int(message_sliced)-1])
             s = s.replace("{"," ")

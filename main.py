@@ -129,11 +129,11 @@ while loopstmnt == True:
                 if message_sliced[0:4] == "show":
                     reply = commands_interface.show(message_sliced,interface_list)
                 if message_sliced[0:7] == "restart":
-                    reply = commands_interface.restart(message_sliced,mapi)
+                    reply = commands_interface.restart(message_sliced,interface)
                 if message_sliced[0:6] == "enable":
-                    reply = "enable"
+                    reply = commands_interface.enable(message_sliced,interface)
                 if message_sliced[0:7] == "disable":
-                    reply = "disable"
+                    reply = commands_interface.disable(message_sliced,interface)
                 bot.reply_to(message,reply)               
     
             @bot.message_handler(func=lambda message: True)
@@ -146,9 +146,9 @@ while loopstmnt == True:
             print("Timed out, try again")
             time.sleep(2)
         
-        except:
+        except Exception as e:
             print("Something went wrong")
-    
+            print("Error code: ", e)
 #-----------------------------------------------------------------------
     if menu_opc == "6":
         loopstmnt=False
