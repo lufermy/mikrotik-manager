@@ -3,6 +3,7 @@ import routeros_api #downloaded from pypi.org
 import telebot #github.com/eternnoir
 #commands
 from commands import commands_interface
+from commands import commands_help
 #---------------------------------------------------Functions
 # 1
 def menu_opc_2(login_username,login_password,login_ip,bot_token):
@@ -92,23 +93,20 @@ while loopstmnt == True:
         connection = routeros_api.RouterOsApiPool(login_ip, username=login_username, password=login_password, plaintext_login=True)
         mapi = connection.get_api()
         print("Connected succesfully!")
-        print("The bot is listening")
-        @bot.message_handler(commands=['start', 'help'])
-        def send_welcome(message):
-	        bot.reply_to(message, "Howdy, how are you doing?")
-        
-        @bot.message_handler(commands=['write'])
+        print("The bot is listening")        
+        @bot.message_handler(commands=['help'])
         def write_firewall(message):
-            bot.reply_to(message, "Check the mikrotik firewall!")
-            list_address =  mapi.get_resource('/ip/firewall/address-list')
-            list_address.add(address="192.168.0.1",comment="P1",list="10M")
-            print(list_address.get(comment="P1"))
-        @bot.message_handler(commands=['show_interfaces'])
-        def show_interfaces(message):
-            interfaces=mapi.get_resource('/interface')
-            interfaces_list=interfaces.get()
-            message_sliced = message.text[16:len(message.text)]
-            reply = commands_interface.show(message_sliced,interfaces_list)
+            bot.reply_to(message, commands_help.show())
+        @bot.message_handler(commands=['interfaces'])
+        def interfaces(message):
+            reply="default reply"
+            interface=mapi.get_resource('/interface')
+            interface_list=interface.get()
+            message_sliced = message.text[12:len(message.text)]
+            if message_sliced == "":
+                reply = commands_interface.help()
+            if message_sliced[0:4] == "show":
+                reply = commands_interface.show(message_sliced,interface_list)
             bot.reply_to(message,reply)
 
 
