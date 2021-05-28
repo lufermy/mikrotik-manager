@@ -42,7 +42,6 @@ def clear_screen():
     for x in range(1,50):
         print("\n")
 def print_menu():
-    time.sleep(2)
     clear_screen()
     print("-----------------------------------")
     print("---- Mikrotik telegram Manager ----")
@@ -83,7 +82,6 @@ while loopstmnt == True:
     if menu_opc == "3":
         data=menu_opc_3()
         login_username=data[0:data.index("\n")]
-        print(len(data))
         data=data[(data.index("\n")+1):len(data)]
         login_password=data[0:data.index("\n")]
         data=data[data.index("\n")+1:len(data)]
@@ -95,39 +93,62 @@ while loopstmnt == True:
         menu_opc_4()
     if menu_opc == "5":
 #-----------------------------------------------------------BOT FUNCTIONS
+        try:
+            try:
+                bot = telebot.TeleBot(bot_token)
+            except:
+                clear_screen()
+                print("Something went wrong with the telegram bot. Make sure that the token is correct")
+                time.sleep(1)
+                print("Restart the bot")
+                time.sleep(1)
+                input()
+            try:
+                connection = routeros_api.RouterOsApiPool(login_ip, username=login_username, password=login_password, plaintext_login=True)
+                mapi = connection.get_api()
+            except:
+                clear_screen()
+                print("Something went wrong with the routerOS API. Make sure that both user and password are correct. Also make sure that the host's ip address is correct and that has the api service active with the default port")
+                time.sleep(1)
+                print("Restart the bot")
+                time.sleep(1)
+                input()
+            print("Connected succesfully!")
+            print("The bot is listening")        
+            @bot.message_handler(commands=['help'])
+            def write_firewall(message):
+                bot.reply_to(message, commands_help.show())
+            @bot.message_handler(commands=['interfaces'])
+            def interfaces(message):
+                reply="default reply"
+                interface=mapi.get_resource('/interface')
+                interface_list=interface.get()
+                message_sliced = message.text[12:len(message.text)]
+                if message_sliced == "":
+                    reply = commands_interface.help()
+                if message_sliced[0:4] == "show":
+                    reply = commands_interface.show(message_sliced,interface_list)
+                if message_sliced[0:7] == "restart":
+                    reply = commands_interface.restart(message_sliced,mapi)
+                if message_sliced[0:6] == "enable":
+                    reply = "enable"
+                if message_sliced[0:7] == "disable":
+                    reply = "disable"
+                bot.reply_to(message,reply)               
+    
+            @bot.message_handler(func=lambda message: True)
+            def echo_all(message):
+                bot.reply_to(message, message.text)
+    
+            bot.polling()
+            connection.disconnect()
+        except routeros_api.exceptions.RouterOsApiConnectionError:
+            print("Timed out, try again")
+            time.sleep(2)
         
-        bot = telebot.TeleBot(bot_token)
-        connection = routeros_api.RouterOsApiPool(login_ip, username=login_username, password=login_password, plaintext_login=True)
-        mapi = connection.get_api()
-        print("Connected succesfully!")
-        print("The bot is listening")        
-        @bot.message_handler(commands=['help'])
-        def write_firewall(message):
-            bot.reply_to(message, commands_help.show())
-        @bot.message_handler(commands=['interfaces'])
-        def interfaces(message):
-            reply="default reply"
-            interface=mapi.get_resource('/interface')
-            interface_list=interface.get()
-            message_sliced = message.text[12:len(message.text)]
-            if message_sliced == "":
-                reply = commands_interface.help()
-            if message_sliced[0:4] == "show":
-                reply = commands_interface.show(message_sliced,interface_list)
-            if message_sliced[0:7] == "restart":
-                reply = commands_interface.restart(message_sliced,mapi)
-            if message_sliced[0:6] == "enable":
-                reply = "enable"
-            if message_sliced[0:7] == "disable":
-                reply = "disable"
-            bot.reply_to(message,reply)               
-
-        @bot.message_handler(func=lambda message: True)
-        def echo_all(message):
-            bot.reply_to(message, message.text)
-
-        bot.polling()
-        connection.disconnect()
+        except:
+            print("Something went wrong")
+    
 #-----------------------------------------------------------------------
     if menu_opc == "6":
         loopstmnt=False
@@ -141,3 +162,5 @@ while loopstmnt == True:
         input("Press enter to be back")
         for x in range(1,50):
             print("\n")
+    
+
