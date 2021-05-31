@@ -15,7 +15,7 @@ from commands import commands_interface
 from commands import commands_help
 from commands import commands_system
 from commands import commands_tool
-#---------------------------------------------------Functions
+#Functions
 # 1
 def menu_opc_2(login_username,login_password,login_ip,bot_token):
     print("")
@@ -63,7 +63,7 @@ def print_menu():
     print("-----------------------------------")
     print("||  Ver. 1.0                     ||")
     print("-----------------------------------")
-#------------------------------------------------------Main function
+#Main function
 loopstmnt=True
 bot_token=""
 login_username=""
@@ -99,7 +99,7 @@ while loopstmnt == True:
     if menu_opc == "4":
         menu_opc_4()
     if menu_opc == "5":
-#-----------------------------------------------------------BOT FUNCTIONS
+#BOT FUNCTIONS
         try:
             try:
                 bot = telebot.TeleBot(bot_token)
@@ -176,7 +176,6 @@ while loopstmnt == True:
         except Exception as e:
             print("Something went wrong")
             print("Error code: ", e)
-#-----------------------------------------------------------------------
     if menu_opc == "6":
         loopstmnt=False
         print("")
