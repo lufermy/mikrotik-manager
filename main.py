@@ -1,3 +1,11 @@
+#
+#   MIKROTIK MANAGER
+#
+#   CREATED BY LUFERMY (SO FAR) 
+#
+#   27/05/2021
+#
+#   Im sorry, everyone
 #Imports
 import routeros_api #downloaded from pypi.org
 import telebot #github.com/eternnoir
@@ -12,6 +20,7 @@ from commands import commands_tool
 def menu_opc_2(login_username,login_password,login_ip,bot_token):
     print("")
     print("Saving...")
+    time.sleep(0.25)
     f = open("data.txt", "w")
     f.write((login_username+"\n"))
     f.close()
@@ -21,6 +30,7 @@ def menu_opc_2(login_username,login_password,login_ip,bot_token):
     f.write((login_ip+"\n"))
     f.write((bot_token+"\n"))
     f.close()
+    input("Data saved. Press enter to continue")
 #3
 def menu_opc_3():
     f = open("data.txt","r")
@@ -31,14 +41,8 @@ def menu_opc_4():
     f.write("")
     print("All the data in data.txt removed succesfully!")
     f.close()
-def menu_opc_5():
-    print("Menu 5")
+    input("Press enter to continue")
 
-# Token prompt
-def token_input():
-    print("Please input the Telegram Bot token")
-    token = input()
-    return token
 # Menu structure
 def clear_screen():
     for x in range(1,50):
@@ -47,8 +51,8 @@ def print_menu():
     clear_screen()
     print("-----------------------------------")
     print("---- Mikrotik telegram Manager ----")
-    print("||        27/05/2021 Build       ||")
-    print("||                               ||")
+    print("||        31/05/2021 Build       ||"+"              Username: "+ login_username)
+    print("||                               ||"+"              Password: "+ login_status)
     print("||  1)Input the ip and token     ||")
     print("||  2)Save input to data.txt     ||")
     print("||  3)Load from data.txt         ||")
@@ -57,20 +61,15 @@ def print_menu():
     print("||  6)Close application          ||")
     print("||  7)About                      ||")
     print("-----------------------------------")
+    print("||  Ver. 1.0                     ||")
     print("-----------------------------------")
-def temporal():
-    token=token_input()
-    bot=telebot.TeleBot(token, parse_mode=None)
-    connection = routeros_api.RouterOsApiPool('192.168.3.179', username='admin', password='', plaintext_login=True)
-    mapi = connection.get_api()
-    print("Bot activated")
-
 #------------------------------------------------------Main function
 loopstmnt=True
 bot_token=""
 login_username=""
 login_password=""
 login_ip=""
+login_status=""
 while loopstmnt == True:
     print_menu()
     menu_opc=input()
@@ -79,6 +78,9 @@ while loopstmnt == True:
         login_username=input("Type the username: ")
         login_password=input("Type the password: ")
         login_ip=input("Type the device's IP: ")
+        login_status="Loaded"
+        print("Data recieved")
+        input("Press enter to continue")
     if menu_opc == "2":
         menu_opc_2(login_username,login_password,login_ip,bot_token)
     if menu_opc == "3":
@@ -90,7 +92,10 @@ while loopstmnt == True:
         login_ip=data[0:data.index("\n")]
         data=data[data.index("\n")+1:len(data)]
         bot_token=data[0:data.index("\n")]
+        login_status="Loaded"
         print("Data loaded succesfully!")
+        time.sleep(1)
+
     if menu_opc == "4":
         menu_opc_4()
     if menu_opc == "5":
@@ -141,8 +146,8 @@ while loopstmnt == True:
             @bot.message_handler(commands=['tools'])
             def tools(message):
                 reply="tools reply"
-                tools=mapi.get_resource('/tool')
-                tools_list=tools.get()
+                #tools=mapi.get_resource('/tool')
+                #tools_list=tools.get()
                 message_sliced = message.text[6:len(message.text)]
                 if message_sliced == "":
                     reply = commands_tool.help()                
@@ -151,8 +156,8 @@ while loopstmnt == True:
             def system(message):
                 reply = "system reply"
                 message_sliced = message.text[8:len(message.text)]
-                system=mapi.get_resource("/system")
-                system_list=system.get()
+                #system=mapi.get_resource("/system")
+                #system_list=system.get()
                 if message_sliced == "":
                     reply = commands_system.help()
                 if message_sliced == "help":
@@ -180,8 +185,13 @@ while loopstmnt == True:
     if menu_opc == "7":
         for x in range(1,50):
             print("\n")
-        print("This is where im supposed to write about, just, not yet")
-        input("Press enter to be back")
+        print("Special thanks")
+        time.sleep(0.25)
+        about="This are the credits of my video game.\n Director: Hideo Kojima\n Storyboard: Hideo Kojima \n Everything else,@lufermy\n\n Seriously now, thanks to everyone who has collaborated in this tool, and has\n showed his support. I really appreciate it since this was my first project so far. Yet it looks\n so unpolished... Well, for now i dont have anyone else to give special thanks to...\n\n\nWhatever."
+        for x in range(0,len(about)):
+            print(about[x],sep='',end='',flush=True)
+            time.sleep(0.06)
+        input("\nPress enter to be back")
         for x in range(1,50):
             print("\n")
     
