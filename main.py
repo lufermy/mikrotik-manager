@@ -5,6 +5,8 @@ import time
 #commands
 from commands import commands_interface
 from commands import commands_help
+from commands import commands_system
+from commands import commands_tool
 #---------------------------------------------------Functions
 # 1
 def menu_opc_2(login_username,login_password,login_ip,bot_token):
@@ -135,7 +137,27 @@ while loopstmnt == True:
                 if message_sliced[0:7] == "disable":
                     reply = commands_interface.disable(message_sliced,interface)
                 bot.reply_to(message,reply)               
-    
+            
+            @bot.message_handler(commands=['tools'])
+            def tools(message):
+                reply="tools reply"
+                tools=mapi.get_resource('/tool')
+                tools_list=tools.get()
+                message_sliced = message.text[6:len(message.text)]
+                if message_sliced == "":
+                    reply = commands_tool.help()                
+                bot.reply_to(message,reply)
+            @bot.message_handler(commands=['system'])
+            def system(message):
+                reply = "system reply"
+                message_sliced = message.text[8:len(message.text)]
+                system=mapi.get_resource("/system")
+                system_list=system.get()
+                if message_sliced == "":
+                    reply = commands_system.help()
+                if message_sliced == "help":
+                    reply = commands_system.help()
+                bot.reply_to(message,reply)
             @bot.message_handler(func=lambda message: True)
             def echo_all(message):
                 bot.reply_to(message, message.text)
