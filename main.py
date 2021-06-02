@@ -50,20 +50,30 @@ def clear_screen():
         print("\n")
 def print_menu():
     clear_screen()
-    print("-----------------------------------")
-    print("---- Mikrotik telegram Manager ----")
-    print("||        02/06/2021 Build       ||"+"              Username: "+ login_username)
-    print("||                               ||"+"              Password: "+ login_status)
-    print("||  1)Input the ip and token     ||")
-    print("||  2)Save input to data.txt     ||")
-    print("||  3)Load from data.txt         ||")
-    print("||  4)Delete data.txt            ||")
-    print("||  5)Run application            ||")
-    print("||  6)Close application          ||")
-    print("||  7)About                      ||")
-    print("-----------------------------------")
-    print("||  Ver. 1.0.1 'The IP version'  ||")
-    print("-----------------------------------")
+    print("----------------------------------------")
+    print("------  Mikrotik telegram Manager ------")
+    print("||            02/06/2021 Build        ||"+" ->  Username: "+ login_username)
+    print("||                                    ||"+" ->  Password: "+ login_status)
+    print("||       1)Input the ip and token     ||"+" STATUS MUST BE LOADED")
+    print("||                                    ||")
+    print("||       2)Save input to data.txt     ||")
+    print("||                                    ||")
+    print("||       3)Load from data.txt         ||")
+    print("||                                    ||")
+    print("||       4)Delete data.txt            ||")
+    print("||                                    ||")
+    print("||       5)Run application            ||")
+    print("||                                    ||")
+    print("||       6)Close application          ||")
+    print("||                                    ||")
+    print("||       7)About                      ||")
+    print("----------------------------------------")
+    print("----------------------------------------")
+def hide_password(password):
+    hidden_password=""
+    for x in range(0,len(password)):
+        hidden_password=hidden_password+"*"
+    return hidden_password
 #Main function
 loopstmnt=True
 bot_token=""
@@ -93,7 +103,7 @@ while loopstmnt == True:
         login_ip=data[0:data.index("\n")]
         data=data[data.index("\n")+1:len(data)]
         bot_token=data[0:data.index("\n")]
-        login_status="Loaded"
+        login_status=hide_password(login_password)
         print("Data loaded succesfully!")
         time.sleep(1)
 
