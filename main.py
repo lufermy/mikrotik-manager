@@ -15,6 +15,7 @@ from commands import commands_interface
 from commands import commands_help
 from commands import commands_system
 from commands import commands_tool
+from commands import commands_ip
 #Functions
 # 1
 def menu_opc_2(login_username,login_password,login_ip,bot_token):
@@ -168,10 +169,13 @@ while loopstmnt == True:
             @bot.message_handler(commands=['ip'])
             def ip(message):
                 reply ="ip default reply"
-                #ip=mapi.get_resource('/ip')
-                #ip_list=ip.get()
                 message_sliced = message.text[4:len(message.text)]
-                print(message_sliced)
+                if message_sliced =="":
+                    reply = commands_ip.help()
+                if message_sliced[0:4] =="help":
+                    reply = commands_ip.help()
+                if message_sliced[0:7] =="address":
+                    reply = commands_ip.address(mapi,message_sliced[8:len(message_sliced)])
                 bot.reply_to(message,reply)
             @bot.message_handler(func=lambda message: True)
             def echo_all(message):
