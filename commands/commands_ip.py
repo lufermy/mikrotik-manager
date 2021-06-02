@@ -46,6 +46,22 @@ def address(api,message):
             return "Remove an IP based on the IP's ID. Example:\n /ip address remove *1 - removes the ip with the id *1"
         address.remove(id=amessage_sliced)
         return "Address removed succesfully"
-                    
-    return linea
+    if message[0:6] == "enable":
+        message_sliced = message[7:len(message)]
+        if message_sliced == "" or message_sliced == "help":
+            return "Enables an IP based on the IP's ID. Example:\n/ip address enable *1 - Enables the ip with id *1"
+        else:
+            address.set(id=message_sliced,disabled="no")
+            return "Address enabled succesfully"
+    if message[0:7] == "disable":
+        message_sliced = message[8:len(message)]
+        if message_sliced == "" or message_sliced == "help":
+            return "Disables an IP based on the IP's ID. Example:\n/ip address disable *1 - Disables the ip with id *1"
+        else:
+            address.set(id=message_sliced,disabled="yes")
+            return "Address disabled succesfully"
 
+    
+
+    return linea
+    

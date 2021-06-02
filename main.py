@@ -52,7 +52,7 @@ def print_menu():
     clear_screen()
     print("-----------------------------------")
     print("---- Mikrotik telegram Manager ----")
-    print("||        31/05/2021 Build       ||"+"              Username: "+ login_username)
+    print("||        02/06/2021 Build       ||"+"              Username: "+ login_username)
     print("||                               ||"+"              Password: "+ login_status)
     print("||  1)Input the ip and token     ||")
     print("||  2)Save input to data.txt     ||")
@@ -62,7 +62,7 @@ def print_menu():
     print("||  6)Close application          ||")
     print("||  7)About                      ||")
     print("-----------------------------------")
-    print("||  Ver. 1.0                     ||")
+    print("||  Ver. 1.0.1 'The IP version'  ||")
     print("-----------------------------------")
 #Main function
 loopstmnt=True
