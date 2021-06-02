@@ -123,11 +123,11 @@ while loopstmnt == True:
             print("Connected succesfully!")
             print("The bot is listening")        
             @bot.message_handler(commands=['help'])
-            def write_firewall(message):
+            def show_help(message):
                 bot.reply_to(message, commands_help.show())
             @bot.message_handler(commands=['interfaces'])
             def interfaces(message):
-                reply="default reply"
+                reply="interfaces default reply"
                 interface=mapi.get_resource('/interface')
                 interface_list=interface.get()
                 message_sliced = message.text[12:len(message.text)]
@@ -145,16 +145,18 @@ while loopstmnt == True:
             
             @bot.message_handler(commands=['tools'])
             def tools(message):
-                reply="tools reply"
+                reply="tools default reply"
                 #tools=mapi.get_resource('/tool')
                 #tools_list=tools.get()
                 message_sliced = message.text[6:len(message.text)]
                 if message_sliced == "":
-                    reply = commands_tool.help()                
+                    reply = commands_tool.help() 
+                if message_sliced == "help":
+                    reply = commands_tool.help()
                 bot.reply_to(message,reply)
             @bot.message_handler(commands=['system'])
             def system(message):
-                reply = "system reply"
+                reply = "system default reply"
                 message_sliced = message.text[8:len(message.text)]
                 #system=mapi.get_resource("/system")
                 #system_list=system.get()
@@ -162,6 +164,14 @@ while loopstmnt == True:
                     reply = commands_system.help()
                 if message_sliced == "help":
                     reply = commands_system.help()
+                bot.reply_to(message,reply)
+            @bot.message_handler(commands=['ip'])
+            def ip(message):
+                reply ="ip default reply"
+                #ip=mapi.get_resource('/ip')
+                #ip_list=ip.get()
+                message_sliced = message.text[4:len(message.text)]
+                print(message_sliced)
                 bot.reply_to(message,reply)
             @bot.message_handler(func=lambda message: True)
             def echo_all(message):
@@ -190,7 +200,7 @@ while loopstmnt == True:
         for x in range(0,len(about)):
             print(about[x],sep='',end='',flush=True)
             time.sleep(0.06)
-        input("\nPress enter to be back")
+        input("\nPress enter to go back")
         for x in range(1,50):
             print("\n")
     
