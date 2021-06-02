@@ -36,22 +36,36 @@ Functions (so far as 28/05/2021)
 		7.- About
 			I dont know what will i put here
 
-	Application functions (sent them to your telegram bot)
-		/help
-			prompts the help menu. Might not be updated
-		/interfaces
-			manages yout interfaces in your mikrotik
-				Options
-					show
-						r - Shows all running interfaces
-						n - Shows interface n
-					restart
-						n - Restarts interface n
-					disable
-						n - Disables interface n
-					enable
-						n - Enables interface n
-
+	Application functions as of 1.0.1 (send them to your telegram bot) 
+		/help - prompts the help menu. Might not be updated yet
+		/interfaces - manages your interfaces on your mikrotik
+			Options
+				show
+					r - Shows all running interfaces
+					n - Shows interface n
+				restart
+					n - Restarts interface n
+				disable
+					n - Disables interface n
+				enable
+					n - Enables interface n
+		
 					-- NOTE THAT N MUST BE A NUMBER
-
+		/ip - manages the ip on your mikrotik
+			Options
+				print - Prints all the ips
+					short - Prints all the ips in a simple format, removing usually relevant information
+				
+				add - Adds an ip
+					Syntax-> add ip/masq comment(no_white_spaces) interface_name
+					Example: /ip address add 192.168.0.10/24 "My_Pc" ether1
+				remove - Removes an ip based on the id. To know the ip id, print them by using /ip addresses print
+					Syntax-> remove ip_id
+					Example: /ip address remove *2
+				enable - Enables an ip based on the id. To know the ip id, print them by using /ip addresses print
+					Syntax-> enable ip_id
+					Example: /ip address enable *4
+				disable - Disables an ip based on the id. To know the ip id, print them by using /ip addresses print
+					Syntax-> disable ip_id
+					Example: /ip address disable *4
 Note that this is my first project so im kinda new, please feel fre to give me any advice. Thanks
