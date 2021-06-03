@@ -54,7 +54,7 @@ def print_menu():
     print("------  Mikrotik telegram Manager ------")
     print("||            02/06/2021 Build        ||"+" ->  Username: "+ login_username)
     print("||                                    ||"+" ->  Password: "+ login_status)
-    print("||       1)Input the ip and token     ||"+" STATUS MUST BE LOADED")
+    print("||       1)Input the ip and token     ||")º
     print("||                                    ||")
     print("||       2)Save input to data.txt     ||")
     print("||                                    ||")
