@@ -17,7 +17,7 @@ from commands import commands_system
 from commands import commands_tool
 from commands import commands_ip
 #Functions
-# 1
+# Saving data to text file
 def menu_opc_2(login_username,login_password,login_ip,bot_token):
     print("")
     print("Saving...")
@@ -32,11 +32,12 @@ def menu_opc_2(login_username,login_password,login_ip,bot_token):
     f.write((bot_token+"\n"))
     f.close()
     input("Data saved. Press enter to continue")
-#3
+# Read data and return it
 def menu_opc_3():
     f = open("data.txt","r")
     data = f.read()
     return data
+# Remove data
 def menu_opc_4():
     f = open("data.txt","w")
     f.write("")
@@ -69,6 +70,7 @@ def print_menu():
     print("||       7)About                      ||")
     print("----------------------------------------")
     print("----------------------------------------")
+# Returns the password string hidden with *
 def hide_password(password):
     hidden_password=""
     for x in range(0,len(password)):
@@ -85,6 +87,7 @@ while loopstmnt == True:
     print_menu()
     menu_opc=input()
     if menu_opc == "1":
+        # Input data
         bot_token=input("Paste the telegram bot token here: ")
         login_username=input("Type the username: ")
         login_password=input("Type the password: ")
@@ -93,8 +96,10 @@ while loopstmnt == True:
         print("Data recieved")
         input("Press enter to continue")
     if menu_opc == "2":
+        # Save
         menu_opc_2(login_username,login_password,login_ip,bot_token)
     if menu_opc == "3":
+        # Load data
         data=menu_opc_3()
         login_username=data[0:data.index("\n")]
         data=data[(data.index("\n")+1):len(data)]
@@ -108,9 +113,10 @@ while loopstmnt == True:
         time.sleep(1)
 
     if menu_opc == "4":
+        # Delete data
         menu_opc_4()
     if menu_opc == "5":
-#BOT FUNCTIONS
+        # Run bot
         try:
             try:
                 bot = telebot.TeleBot(bot_token)
@@ -133,9 +139,16 @@ while loopstmnt == True:
                 input()
             print("Connected succesfully!")
             print("The bot is listening")        
+            # Commands
+            #       Help -> Prompts all available commands
             @bot.message_handler(commands=['help'])
             def show_help(message):
                 bot.reply_to(message, commands_help.show())
+            #       Interfaces -> Lets u manage interfaces
+            #                   Show
+            #                   Restart
+            #                   Enable
+            #                   Disable
             @bot.message_handler(commands=['interfaces'])
             def interfaces(message):
                 reply="interfaces default reply"
@@ -153,7 +166,8 @@ while loopstmnt == True:
                 if message_sliced[0:7] == "disable":
                     reply = commands_interface.disable(message_sliced,interface)
                 bot.reply_to(message,reply)               
-            
+            #       Tools -> Prompts tools
+            #       NOT WORKING YET
             @bot.message_handler(commands=['tools'])
             def tools(message):
                 reply="tools default reply"
@@ -165,6 +179,8 @@ while loopstmnt == True:
                 if message_sliced == "help":
                     reply = commands_tool.help()
                 bot.reply_to(message,reply)
+            #       System -> Modifies the /system
+            #       NOT WORKING YET
             @bot.message_handler(commands=['system'])
             def system(message):
                 reply = "system default reply"
@@ -176,6 +192,15 @@ while loopstmnt == True:
                 if message_sliced == "help":
                     reply = commands_system.help()
                 bot.reply_to(message,reply)
+            #       IP -> Modifies the IP interfaces
+            #           Help -> Prompts help
+            #           Address -> Prompts help
+            #               -> Add
+            #               -> Remove
+            #               -> Print
+            #               -> Enable
+            #               -> Disable
+            #~              ->
             @bot.message_handler(commands=['ip'])
             def ip(message):
                 reply ="ip default reply"
@@ -201,11 +226,13 @@ while loopstmnt == True:
             print("Something went wrong")
             print("Error code: ", e)
     if menu_opc == "6":
+        #Exit
         loopstmnt=False
         print("")
         print("Bye...")
         print("")
     if menu_opc == "7":
+        #About?
         for x in range(1,50):
             print("\n")
         print("Special thanks")
