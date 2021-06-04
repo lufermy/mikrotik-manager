@@ -189,12 +189,12 @@ while loopstmnt == True:
                 #system_list=system.get()
                 if message_sliced == "":
                     reply = commands_system.help()
-                if message_sliced == "help":
+                if message_sliced[0:4] == "help":
                     reply = commands_system.help()
-                if message_sliced == "health":
+                if message_sliced[0:6] == "health":
                     reply = commands_system.health(mapi)
-                if message_sliced == "identity":
-                    reply = commands_system.health(message_sliced[9:len(messaege_sliced)],mapi)                    
+                if message_sliced[0:8] == "identity":
+                    reply = commands_system.identity(message_sliced[9:len(message_sliced)],mapi)                    
                 bot.reply_to(message,reply)
             #       IP -> Modifies the IP interfaces
             #           Help -> Prompts help
@@ -204,7 +204,8 @@ while loopstmnt == True:
             #               -> Print
             #               -> Enable
             #               -> Disable
-            #~              ->
+            #~              
+            #           Pool -> prompts the pools
             @bot.message_handler(commands=['ip'])
             def ip(message):
                 reply ="ip default reply"
@@ -215,6 +216,8 @@ while loopstmnt == True:
                     reply = commands_ip.help()
                 if message_sliced[0:7] =="address":
                     reply = commands_ip.address(mapi,message_sliced[8:len(message_sliced)])
+                if message_sliced[0:4] == "pool":
+                    reply = commands_ip.pool(mapi,message_sliced[5:len(message_sliced)])
                 bot.reply_to(message,reply)
             @bot.message_handler(func=lambda message: True)
             def echo_all(message):

@@ -40,6 +40,7 @@ def address(api,message):
                     interfaces=interfaces+message_sliced[x]
         address.add(address=ip,comment=commentairo,interface=interfaces)
         return "Address added succesfully"
+
     if message[0:6] == "remove":
         amessage_sliced=message[7:len(message)]
         if amessage_sliced == "" or amessage_sliced == "help":
@@ -64,4 +65,47 @@ def address(api,message):
     
 
     return linea
-    
+def pool(api,message):
+    pool=api.get_resource("/ip/pool")
+    if message == "":
+        s = str(pool.get())       
+        s=s.replace("[","")
+        s=s.replace("{","")
+        s=s.replace("'","")
+        s=s.replace(",","\n")
+        s=s.replace("}","")
+        s=s.replace("]","")
+        return s
+    if message[0:3] == "add":
+        message_sliced=message[4:len(message)]
+        if message_sliced == "" or message_sliced == "help":
+            return "Add a pool to the device. Must have this syntax: 192.168.1.100-192.168.1.150 'comment' 'name'"
+        ipinputed=False
+        commentinputed=False
+        poolrange=""
+        commentairo=''
+        namepool=""
+        for x in range(0,len(message_sliced)):
+            if ipinputed == False:
+                if message_sliced[x] == " ":
+                    ipinputed =True
+                else:
+                    poolrange = poolrange+message_sliced[x]
+            elif commentinputed == False:
+                if message_sliced[x] == " ":
+                    commentinputed = True
+                else:
+                    commentairo = commentairo+message_sliced[x]
+            else:
+                namepool=namepool+message_sliced[x]
+        pool.add(comment=commentairo,name=namepool,ranges=poolrange)
+        return "Address added succesfully"
+
+    if message[0:6] == "remove":
+        amessage_sliced=message[7:len(message)]
+        if amessage_sliced == "" or amessage_sliced == "help":
+            return "Remove a pool based on the pool's ID. Example:\n /ip pool remove *1 - removes the pool with the id *1"
+        pool.remove(id=amessage_sliced)
+        return "Pool removed succesfully"
+
+
