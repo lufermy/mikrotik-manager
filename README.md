@@ -22,7 +22,7 @@ The code is very intolerant with errors for now, i'll change that
 Functions (so far as 28/05/2021)
 	Menu:
 		1.- Input the ip and token
-			Here's where you put your Bot token, mikrotik device's user and password, aswell the IP
+			Here's where you put your Bot token, mikrotik device's user and password, also the IP
 		2.- Save input to data.txt
 			Here you save your (already inputed) login credentials to a text file, so you can use them later for faster logins!
 		3.- Load from data.txt
@@ -53,19 +53,28 @@ Functions (so far as 28/05/2021)
 					-- NOTE THAT N MUST BE A NUMBER
 		/ip - manages the ip on your mikrotik
 			Options
-				print - Prints all the ips
-					short - Prints all the ips in a simple format, removing usually relevant information
-				
-				add - Adds an ip
-					Syntax-> add ip/masq comment(no_white_spaces) interface_name
-					Example: /ip address add 192.168.0.10/24 "My_Pc" ether1
-				remove - Removes an ip based on the id. To know the ip id, print them by using /ip addresses print
-					Syntax-> remove ip_id
-					Example: /ip address remove *2
-				enable - Enables an ip based on the id. To know the ip id, print them by using /ip addresses print
-					Syntax-> enable ip_id
-					Example: /ip address enable *4
-				disable - Disables an ip based on the id. To know the ip id, print them by using /ip addresses print
-					Syntax-> disable ip_id
-					Example: /ip address disable *4
+				address
+					print - Prints all the ips
+					
+					add - Adds an ip
+						Syntax-> add ip/masq comment(no_white_spaces) interface_name
+						Example: /ip address add 192.168.0.10/24 "My_Pc" ether1
+					remove - Removes an ip based on the id. To know the ip id, print them by using /ip addresses print
+						Syntax-> remove ip_id
+						Example: /ip address remove *2
+					enable - Enables an ip based on the id. To know the ip id, print them by using /ip addresses print
+						Syntax-> enable ip_id
+						Example: /ip address enable *4
+					disable - Disables an ip based on the id. To know the ip id, print them by using /ip addresses print
+						Syntax-> disable ip_id
+						Example: /ip address disable *4
+				pool
+					print - Prints all the pools
+					add - Adds a pool
+						Syntax-> add ipmin-ipmax comment(with no blank spaces) pool_name
+						Example: /ip pool add 192.168.1.50-192.168.1.100 local_devices pool2
+					remove - Removes a pool
+						Syntax-> remove id
+						Example: /ip pool remove *1
+						
 Note that this is my first project so im kinda new, please feel fre to give me any advice. Thanks
