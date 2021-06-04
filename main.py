@@ -55,7 +55,7 @@ def print_menu():
     print("------  Mikrotik telegram Manager ------")
     print("||            02/06/2021 Build        ||"+" ->  Username: "+ login_username)
     print("||                                    ||"+" ->  Password: "+ login_status)
-    print("||       1)Input the ip and token     ||")º
+    print("||       1)Input the ip and token     ||")
     print("||                                    ||")
     print("||       2)Save input to data.txt     ||")
     print("||                                    ||")
@@ -191,6 +191,10 @@ while loopstmnt == True:
                     reply = commands_system.help()
                 if message_sliced == "help":
                     reply = commands_system.help()
+                if message_sliced == "health":
+                    reply = commands_system.health(mapi)
+                if message_sliced == "identity":
+                    reply = commands_system.health(message_sliced[9:len(messaege_sliced)],mapi)                    
                 bot.reply_to(message,reply)
             #       IP -> Modifies the IP interfaces
             #           Help -> Prompts help
