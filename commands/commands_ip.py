@@ -61,13 +61,10 @@ def address(api,message):
         else:
             address.set(id=message_sliced,disabled="yes")
             return "Address disabled succesfully"
-
-    
-
     return linea
 def pool(api,message):
     pool=api.get_resource("/ip/pool")
-    if message == "":
+    if message == "" or message == "print":
         s = str(pool.get())       
         s=s.replace("[","")
         s=s.replace("{","")
