@@ -218,10 +218,9 @@ while loopstmnt == True:
                     reply = commands_ip.address(mapi,message_sliced[8:len(message_sliced)])
                 if message_sliced[0:4] == "pool":
                     reply = commands_ip.pool(mapi,message_sliced[5:len(message_sliced)])
-                bot.reply_to(message,reply)
                 if message_sliced[0:8] == "firewall":
                     reply = commands_ip.firewall(mapi,message_sliced[9:len(message_sliced)])
-
+                bot.reply_to(message,reply)
             @bot.message_handler(func=lambda message: True)
             def echo_all(message):
                 bot.reply_to(message, message.text)

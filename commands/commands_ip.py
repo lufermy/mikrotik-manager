@@ -107,44 +107,18 @@ def pool(api,message):
 
 def firewall(api,message): 
     firewall=api.get_resource("/ip/firewall")
-    if message == "" or message == "print":
-        s = str(pool.get())
-        s=s.replace("[","")
-        s=s.replace("{","")
-        s=s.replace("'","")
-        s=s.replace(",","\n")
-        s=s.replace("}","")
-        s=s.replace("]","")
-        return s
-    if message[0:3] == "add":
-        message_sliced=message[4:len(message)]
+    print(message)
+    if message == "" or message == "help" :#help string
+        return "Firewall\n -address list:\n   -add\n   -set\n   -enable\n   -disable\n   -comment\n   -remove\n -nat:\n   -add\n   -enable\n   -disable\n   -comment\n   -remove\n"
+    if message[0:12] == "address-list":
+        message_sliced = message[13:len(message)]
         if message_sliced == "" or message_sliced == "help":
-            return "Add a firewall rule to the device. Must have this syntax: 192.168.1.100-192.168.1.150 'comment' 'name'"
-        ipinputed=False
-        commentinputed=False
-        poolrange=""
-        commentairo=''
-        namepool=""
-        for x in range(0,len(message_sliced)):
-            if ipinputed == False:
-                if message_sliced[x] == " ":
-                    ipinputed =True
-                else:
-                    poolrange = poolrange+message_sliced[x]
-            elif commentinputed == False:
-                if message_sliced[x] == " ":
-                    commentinputed = True
-                else:
-                    commentairo = commentairo+message_sliced[x]
-            else:
-                namepool=namepool+message_sliced[x]
-        pool.add(comment=commentairo,name=namepool,ranges=poolrange)
-        return "Address added succesfully"
+            return "Nat\n----------------\n\n add -- Adds a nat rule to the firewall\n enable -- Enables a nat rule at the firewall\n disable -- Disables a nat rule\n comment -- Edits the comment"
+        elif message_sliced[0:3] == "add":
+            if message_sliced[4:len(message_sliced)] == "" or message_sliced[4:len(message_sliced)] == "help":
+                return "Add a nat rule to the firewall. Syntax --------I LEFT IT HERE. I'LL BE BACK TOMORROW I GUESS"
+        return s
+    if message[0:3] == "nat"
+        
 
-    if message[0:6] == "remove":
-        amessage_sliced=message[7:len(message)]
-        if amessage_sliced == "" or amessage_sliced == "help":
-            return "Remove a pool based on the pool's ID. Example:\n /ip pool remove *1 - removes the pool with the id *1"
-        pool.remove(id=amessage_sliced)
-        return "Pool removed succesfully"
-
+        return s
